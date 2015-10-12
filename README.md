@@ -1,6 +1,6 @@
 # grunt-img-sprite
 
-> Grunt 上的精灵图自动构建工具，基于 [img-sprite](https://github.com/cupools/img-sprite) 实现
+> Grunt 下的精灵图自动构建工具，基于 [img-sprite](https://github.com/cupools/img-sprite) 实现
 
 ## 安装
 这个插件需要 Grunt `~0.4.5`
@@ -18,7 +18,7 @@ grunt.loadNpmTasks('grunt-img-sprite');
 ```
 
 ## 特性
-1. 像 FIS 一般，通过在 css 文件中背景图片添加标识。**跟平时一样写 css，仅在打包阶段产出精灵图和新的 css 文件**
+1. 像 FIS 一般，通过在 css 文件中背景图片添加标识合并精灵图。**跟平时一样写 css，仅在打包阶段产出精灵图和新的 css 文件**
 1. 能够根据标识产出多个精灵图
 1. 不依赖 Less 等 CSS 预处理器
 1. 兼容 Retina，并自动插入媒体查询代码
@@ -54,7 +54,7 @@ grunt.initConfig({
             retina: false,
             algorithm: 'binary-tree',
             padding: 10,
-            maxLimit: 10 * 1024
+            sizeLimit: 10 * 1024
         },
         task: {
             src: 'css/*.css',
