@@ -1,6 +1,6 @@
 # grunt-img-sprite
 
-> Grunt 下的精灵图自动构建工具，基于 [img-sprite](https://github.com/cupools/img-sprite) 实现
+> Grunt 下的精灵图自动构建工具，基于 [img-sprite](https://github.com/cupools/img-sprite) 实现，依赖 [GM](http://www.graphicsmagick.org/)
 
 ## 安装
 这个插件需要 Grunt `~0.4.5`
@@ -22,10 +22,12 @@ grunt.loadNpmTasks('grunt-img-sprite');
 1. 能够根据标识产出多个精灵图
 1. 不依赖 Less 等 CSS 预处理器
 1. 兼容 Retina，并自动插入媒体查询代码
-1. 支持 Base64 内联图片
+1. Base64 内联图片，通过 `?__inline` 标识
 
 ## 使用
 ### 简单配置如下
+
+#### Gruntfile
 
 ``` javascript
 grunt.initConfig({
@@ -36,15 +38,41 @@ grunt.initConfig({
   		}
 	}
 });
+...
+```
+
+#### main.css
+
+``` css
+.icon0 {
+  width: 128px;
+  height: 128px;
+  background: url(../images/0.png?__tom) no-repeat;
+  background-size: 128px 128px;
+}
+.icon1 {
+  width: 128px;
+  height: 128px;
+  color: #ccc;
+  background: url(../images/1.png?__tom) no-repeat;
+  background-size: 128px 128px;
+}
+.icon2 {
+  width: 50px;
+  height: 50px;
+  color: #ccc;
+  background: url(../images/2.png?__inline) no-repeat;
+  background-size: 50px 50px;
+}
+
 ```
 
 ![css 文件](https://github.com/cupools/grunt-img-sprite/blob/master/docs/00.png)
 
 ![精灵图](https://github.com/cupools/grunt-img-sprite/blob/master/docs/01.png)
 
-
 ### 更多配置如下
-```javascript
+```mjavascript
 grunt.initConfig({
     img_sprite: {
         options: {
@@ -115,6 +143,34 @@ grunt.initConfig({
 - 类型：Number
 - 说明：内联图片大小限制
 - 默认：5000
+
+## 其他问题
+1. 没有 GM 以外的选择吗  
+    尝试了 node Jimp，缩小图片效果不理想。暂时不支持在 img-sprite 中配置其他的位图引擎。折腾 GM 可以戳[这里](http://cupools.github.io/2015/09/29/notes/%E5%AE%89%E8%A3%85%20GraphicsMagick%E8%BF%99%E4%B8%AA%E5%A4%A7%E5%9D%91/)
+
+1. 对其他样式的影响  
+    调整 AST 的过程中会将做这样的处理，删除 background 有关的样式并插入新的值。保留背景颜色，不支持同时定义多个背景图片
+    
+    ``` javascript
+    var colorReg = /#\w{3,6}|rgba?\(.+?\)/,
+        resetBgReg = /background-[size|image|position]/,
+    ...
+    // 设置 background 样式
+    spriteSet[i].node.value = color + 'url(' + options.imgPath + basename + ') ' + offsetX + ' ' + offsetY;
+    ...
+    // 插入 background-size
+    spriteSet[i].parent.push({
+        type: 'declaration',
+        property: 'background-size',
+        value: ceil(properties.width / pow) + 'px ' + ceil(properties.height / pow) + 'px'
+        });
+    ``` 
+1. 缺点  
+	- 目前仅支持处理 .png
+	- 写样式的时候建议元素的宽高和背景图的宽高一致，其他情况下精灵图不方便处理。有什么好的建议请务必提 [issue](https://github.com/cupools/img-sprite/issues)
+	- 不支持背景图 repeat
+	- 暂不支持多个背景图
+	- 目前仅支持处理 .css
 
 ## 更新日志
 - 0.1.0：基本功能

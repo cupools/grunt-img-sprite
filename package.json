@@ -1,7 +1,7 @@
 {
   "name": "grunt-img-sprite",
-  "version": "0.1.0",
-  "description": "Grunt 下的自动精灵图工具",
+  "version": "0.1.1",
+  "description": "auto image sprite",
   "homepage": "https://github.com/cupools/grunt-img-sprite",
   "author": "liyh <cupools@gmail.com>",
   "repository": {
