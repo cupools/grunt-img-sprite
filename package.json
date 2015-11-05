@@ -1,6 +1,6 @@
 {
   "name": "grunt-img-sprite",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "auto image sprite",
   "homepage": "https://github.com/cupools/grunt-img-sprite",
   "author": "liyh <cupools@gmail.com>",
@@ -39,7 +39,7 @@
     "css"
   ],
   "dependencies": {
-    "img-sprite": "^0.2.0"
+    "img-sprite": "^0.3.0"
   },
   "main": "Gruntfile.js",
   "directories": {

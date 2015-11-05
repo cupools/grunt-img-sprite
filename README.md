@@ -1,6 +1,6 @@
 # grunt-img-sprite
 
-> Grunt 下的精灵图自动构建工具，基于 [img-sprite](https://github.com/cupools/img-sprite) 实现，依赖 [GM](http://www.graphicsmagick.org/)
+> Grunt 下的精灵图自动构建工具，基于 [img-sprite](https://github.com/cupools/img-sprite) 实现，**不依赖 [GM](http://www.graphicsmagick.org/) 等图形处理库**
 
 ## 安装
 这个插件需要 Grunt `~0.4.5`
@@ -18,11 +18,13 @@ grunt.loadNpmTasks('grunt-img-sprite');
 ```
 
 ## 特性
-1. 像 FIS 一般，通过在 css 文件中背景图片添加标识合并精灵图。**跟平时一样写 css，仅在打包阶段产出精灵图和新的 css 文件**
+1. 像 FIS 一般，通过在 css 文件中背景图片添加标识合并精灵图。**跟平时一样写样式，仅在打包阶段产出精灵图和新的 css 文件**。不关心是否使用 SASS 等
 1. 能够根据标识产出多个精灵图
 1. 不依赖 Less 等 CSS 预处理器
 1. 兼容 Retina，并自动插入媒体查询代码
 1. Base64 内联图片，通过 `?__inline` 标识
+1. 使用要简单，简单，简单，**不依赖于 GM 等图像处理库**
+1. 设计稿每次导出 @2x 的图片即可，由工具产出 @1x 的图片
 
 ## 使用
 ### 简单配置如下
@@ -145,8 +147,10 @@ grunt.initConfig({
 - 默认：5000
 
 ## 其他问题
-1. 没有 GM 以外的选择吗  
-    尝试了 node Jimp，缩小图片效果不理想。暂时不支持在 img-sprite 中配置其他的位图引擎。折腾 GM 可以戳[这里](http://cupools.github.io/2015/09/29/notes/%E5%AE%89%E8%A3%85%20GraphicsMagick%E8%BF%99%E4%B8%AA%E5%A4%A7%E5%9D%91/)
+1. 不依赖 GM 等图形处理库  
+    `v3.0.0` 开始使用 [images](https://github.com/zhangyuanwei/node-images) 替代了 spritesmith 默认的位图引擎，解决了 windows 平台下产出精灵图可能出现噪点的情况，缩短了产出图片的耗时。同时抛弃了对 GM 的依赖，不再需要折腾啦！产出图片的质量也比较出色，感谢作者~
+    
+    此外尝试了 node Jimp，缩小图片效果不理想；尝试了 [phantomjs](http://phantomjs.org/) 作为位图引擎，但发现在 window 和 osx 下速度大幅慢于其他引擎，故不采用。暂时不支持在 img-sprite 中配置其他的位图引擎
 
 1. 对其他样式的影响  
     调整 AST 的过程中会将做这样的处理，删除 background 有关的样式并插入新的值。保留背景颜色，不支持同时定义多个背景图片
