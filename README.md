@@ -148,7 +148,7 @@ grunt.initConfig({
 
 ## 其他问题
 1. 不依赖 GM 等图形处理库  
-    `v3.0.0` 开始使用 [images](https://github.com/zhangyuanwei/node-images) 替代了 spritesmith 默认的位图引擎，解决了 windows 平台下产出精灵图可能出现噪点的情况，缩短了产出图片的耗时。同时抛弃了对 GM 的依赖，不再需要折腾啦！产出图片的质量也比较出色，感谢作者~
+    img-sprite 从 `v0.3.0` 开始使用 [images](https://github.com/zhangyuanwei/node-images) 替代了 spritesmith 默认的位图引擎，解决了 windows 平台下产出精灵图可能出现噪点的情况，缩短了产出图片的耗时。同时不再依赖 GM，再也不需要折腾啦！产出图片的质量也比较出色，感谢作者~
     
     此外尝试了 node Jimp，缩小图片效果不理想；尝试了 [phantomjs](http://phantomjs.org/) 作为位图引擎，但发现在 window 和 osx 下速度大幅慢于其他引擎，故不采用。暂时不支持在 img-sprite 中配置其他的位图引擎
 
@@ -171,10 +171,12 @@ grunt.initConfig({
     ``` 
 1. 缺点  
 	- 目前仅支持处理 .png
-	- 写样式的时候建议元素的宽高和背景图的宽高一致，其他情况下精灵图不方便处理。有什么好的建议请务必提 [issue](https://github.com/cupools/img-sprite/issues)
+	- 写样式的时候建议元素的宽高和背景图的宽高一致，其他情况下精灵图不方便处理
 	- 不支持背景图 repeat
 	- 暂不支持多个背景图
-	- 目前仅支持处理 .css
+	- 仅支持处理 .css。实际上推荐使用 SASS 等写样式，在产出 css 文件后交给 img-sprite 做进一步精灵图合并处理即可
 
 ## 更新日志
+- 0.2.0：
+	- 使用 [images](https://github.com/zhangyuanwei/node-images) 替代了 spritesmith 默认的位图引擎，解决了 windows 平台下产出精灵图可能出现噪点的情况，同时不再依赖 GM
 - 0.1.0：基本功能
